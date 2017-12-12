@@ -1,11 +1,13 @@
 module HelloTwo exposing (..)
 
-import Html exposing (div, h1, p, text)
+import Html exposing (..)
+import Html.Attributes exposing (class)
 
 
+main : Html msg
 main =
-    div []
-        [ h1 [] [ text "This is a title" ]
+    div [ class "elm-div" ]
+        [ h1 [ class "banner" ] [ text "This is a title" ]
         , p [] [ text "This is a paragraph" ]
         , p [] [ text "Another paragraph" ]
         ]
