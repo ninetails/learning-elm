@@ -10,16 +10,22 @@ main =
 
 
 type alias Model =
-    { text : String }
+    { text : String
+    , size : Int
+    }
 
 
 model : Model
 model =
-    { text = "Hello world" }
+    { text = "Hello world"
+    , size = 1
+    }
 
 
 type Msg
     = Text
+    | SizeUp
+    | SizeDown
 
 
 update : Msg -> Model -> Model
@@ -28,11 +34,17 @@ update msg model =
         Text ->
             { model | text = model.text ++ "!" }
 
+        SizeUp ->
+            { model | size = model.size + 1 }
 
-myStyle : Attribute msg
-myStyle =
+        SizeDown ->
+            { model | size = model.size - 1 }
+
+
+myStyle : Int -> Attribute msg
+myStyle size =
     style
-        [ ( "fontSize", "10em" )
+        [ ( "fontSize", toString size ++ "em" )
         , ( "color", "teal" )
         ]
 
@@ -40,6 +52,8 @@ myStyle =
 view : Model -> Html Msg
 view model =
     div []
-        [ div [ myStyle ] [ text model.text ]
+        [ div [ myStyle model.size ] [ text model.text ]
         , button [ onClick Text ] [ text "Add exclamation mark" ]
+        , button [ onClick SizeUp ] [ text "+" ]
+        , button [ onClick SizeDown ] [ text "-" ]
         ]
