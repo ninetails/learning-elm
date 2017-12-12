@@ -29,33 +29,46 @@ update msg model =
             { model | text = txt }
 
 
-bigText : Attribute msg
-bigText =
+
+-- bigText : Attribute msg
+-- bigText =
+--     style
+--         [ ( "fontSize", "20em" )
+--         , ( "color", "sandybrown" )
+--         ]
+-- smallText : Attribute msg
+-- smallText =
+--     style
+--         [ ( "fontSize", "10em" )
+--         , ( "color", "indianred" )
+--         ]
+-- checkTextSize : String -> Attribute msg
+-- checkTextSize str =
+--     if String.length str < 8 then
+--         bigText
+--     else
+--         smallText
+
+
+adjustSize : Model -> Attribute msg
+adjustSize { text } =
+    let
+        ( size, color ) =
+            if String.length text < 8 then
+                ( "20em", "goldenrod" )
+            else
+                ( "10em", "seashell" )
+    in
     style
-        [ ( "fontSize", "20em" )
-        , ( "color", "sandybrown" )
+        [ ( "fontSize", size )
+        , ( "color", color )
+        , ( "fontFamily", "Arial" )
         ]
-
-
-smallText : Attribute msg
-smallText =
-    style
-        [ ( "fontSize", "10em" )
-        , ( "color", "indianred" )
-        ]
-
-
-checkTextSize : String -> Attribute msg
-checkTextSize str =
-    if String.length str < 8 then
-        bigText
-    else
-        smallText
 
 
 view : Model -> Html Msg
 view model =
     div []
         [ input [ placeholder "Type text here", onInput Text ] []
-        , div [ checkTextSize model.text ] [ text model.text ]
+        , div [ adjustSize model ] [ text model.text ]
         ]
