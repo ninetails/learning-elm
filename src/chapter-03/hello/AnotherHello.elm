@@ -21,7 +21,26 @@ statusChecks =
     ]
 
 
+renderList : List String -> Html msg
+renderList list =
+    list
+        -- |> List.map (\l -> li [] [text l])
+        |> List.map createLi
+        |> ul []
+
+
+
+-- ul []
+--     (List.map (\l -> li [] [ text l ]) list)
+
+
+createLi : String -> Html msg
+createLi str =
+    li [] [ text str ]
+
+
 main =
-    statusChecks
-        |> toString
-        |> text
+    div []
+        [ h1 [] [ text "list of statuses:" ]
+        , renderList statusChecks
+        ]
