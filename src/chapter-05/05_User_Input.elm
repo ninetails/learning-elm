@@ -29,17 +29,33 @@ update msg model =
             { model | text = txt }
 
 
-styleText : Attribute msg
-styleText =
+bigText : Attribute msg
+bigText =
     style
         [ ( "fontSize", "20em" )
         , ( "color", "sandybrown" )
         ]
 
 
+smallText : Attribute msg
+smallText =
+    style
+        [ ( "fontSize", "10em" )
+        , ( "color", "indianred" )
+        ]
+
+
+checkTextSize : String -> Attribute msg
+checkTextSize str =
+    if String.length str < 8 then
+        bigText
+    else
+        smallText
+
+
 view : Model -> Html Msg
 view model =
     div []
         [ input [ placeholder "Type text here", onInput Text ] []
-        , div [ styleText ] [ text model.text ]
+        , div [ checkTextSize model.text ] [ text model.text ]
         ]
